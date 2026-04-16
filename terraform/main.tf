@@ -1,0 +1,22 @@
+provider "aws" {
+  region = "ap-south-1"
+}
+
+resource "aws_instance" "k8s_master" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.medium"
+
+  tags = {
+    Name = "k8s-master"
+  }
+}
+
+resource "aws_instance" "k8s_worker" {
+  count         = 2
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.medium"
+
+  tags = {
+    Name = "k8s-worker-${count.index}"
+  }
+}
